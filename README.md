@@ -18,28 +18,28 @@ aus_temperature:
   variable - type - description
 
     date - date : Date
-  city_name  - character : City Name
-  station_name - character : Actual site / weather station
-  station_number - double : Station number
-  temperature - double : Temperature in Celsius
-  accumulation_days - double : Accumulation days
-  quality - character : Certified quality or not
-  min.max - character : min or max temperature
-  latitude - double : Latitude
-  longitude - double : Longitude
+    city_name - character : City Name
+    station_name - character : Actual site / weather station
+    station_number - double : Station number
+    temperature - double : Temperature in Celsius
+    accumulation_days - double : Accumulation days
+    quality - character : Certified quality or not
+    min.max - character : min or max temperature
+    latitude - double : Latitude
+    longitude - double : Longitude
   
 isr_temperature:
   variable - type - description
 
-  station_name - character : Actual site / weather station
-  station_number - double : Station number
-  date - date : Date
-  max_temp - double : maximum temp 
-  min_temp - double : minimum temp 
-  min_temp_ground - double : Minimal temperature messured on ground
-  light_time - double : Light time
-  latitude - double : Latitude
-  longitude - double : Longitude
+    station_name - character : Actual site / weather station
+    station_number - double : Station number
+    date - date : Date
+    max_temp - double : maximum temp 
+    min_temp - double : minimum temp 
+    min_temp_ground - double : Minimal temperature messured on ground
+    light_time - double : Light time
+    latitude - double : Latitude
+    longitude - double : Longitude
 
   
   
@@ -47,84 +47,84 @@ isr_temperature:
 aus_rainfall:
   variable - type : description
 
-  date - date - Date
-  city_name - character : City Name
-  station_name : character - Station Name
-  station_number - character : Station Code
-  amount - double : rainfall in millimeters
-  period - double : how many days was is collected across
-  quality - character : Certified quality or not
-  lat - double : latitude
-  long - double : longitude
+    date - date - Date
+    city_name - character : City Name
+    station_name : character - Station Name
+    station_number - character : Station Code
+    amount - double : rainfall in millimeters
+    period - double : how many days was is collected across
+    quality - character : Certified quality or not
+    lat - double : latitude
+    long - double : longitude
   
 
 isr_rainfall:
   variable - type : description
 
-  station_name : character - Station Name
-  station_number - character : Station Code
-  date - date - Date
-  daily_amount - double : rainfall in millimeters
-  daily_rain_code - double :
+    station_name : character - Station Name
+    station_number - character : Station Code
+    date - date - Date
+    daily_amount - double : rainfall in millimeters
+    daily_rain_code - double :
 
 
 aus_fires:
   variable - type : description
 
-  latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
+    latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
 
-  longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
+    longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
 
-  brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
+    brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
 
-  scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
+    scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
 
-  track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
+    track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
 
-  acq_date - date : Date of MODIS acquisition.
+    acq_date - date : Date of MODIS acquisition.
 
-  act_time - character : Time of acquisition/overpass of the satellite (in UTC).
+    act_time - character : Time of acquisition/overpass of the satellite (in UTC).
 
-  satellite - character : A = Aqua and T = Terra. 
+    satellite - character : A = Aqua and T = Terra. 
 
-  confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
+    confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
 
-  bright_t31 - double : Channel 31 brightness temperature of the fire pixel measured in Kelvin.
+    bright_t31 - double : Channel 31 brightness temperature of the fire pixel measured in Kelvin.
 
-  frp - double : Depicts the pixel-integrated fire radiative power in MW (megawatts).
+    frp - double : Depicts the pixel-integrated fire radiative power in MW (megawatts).
 
-  day_night - character: D = Daytime, N = Nighttime
+    day_night - character: D = Daytime, N = Nighttime
 
 
 
 isr_fires:
   variable - type : description
 
-  latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
+    latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
 
-  longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
+    longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
 
-  brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
+    brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
 
-  scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
+    scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
 
-  track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
+    track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
 
-  acq_date - date : Date of MODIS acquisition.
+    acq_date - date : Date of MODIS acquisition.
 
-  act_time - character : Time of acquisition/overpass of the satellite (in UTC).
+    act_time - character : Time of acquisition/overpass of the satellite (in UTC).
 
-  satellite - character : A = Aqua and T = Terra. 
+    satellite - character : A = Aqua and T = Terra. 
 
-  confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
+    confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
 
-  bright_t31 - double : Channel 31 brightness temperature of the fire pixel measured in Kelvin.
+    bright_t31 - double : Channel 31 brightness temperature of the fire pixel measured in Kelvin.
 
-  frp - double : Depicts the pixel-integrated fire radiative power in MW (megawatts).
+    frp - double : Depicts the pixel-integrated fire radiative power in MW (megawatts).
 
-  day_night - character : D = Daytime, N = Nighttime
+    day_night - character : D = Daytime, N = Nighttime
 
-  instrument - character : satellite name
+    instrument - character : satellite name
 
 #####################################################################################
 
