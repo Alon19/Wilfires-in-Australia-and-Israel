@@ -34,9 +34,9 @@ Each sample of every table also contains a coordinate, indicating the location t
 | station_name | character | Actual site / weather station |
 | station_number | double | Station number |
 | date | date | Date |
-| max_temp | double | maximum temp |
-| min_temp | double | minimum temp |
-| min_temp_ground | double | Minimal temperature messured on ground |
+| max_temp | double | maximum temperature |
+| min_temp | double | minimum temperature |
+| min_temp_ground | double | Minimal temperature measured on ground |
 | light_time | double | Light time |
 | latitude | double | Latitude |
 | longitude | double | Longitude |
