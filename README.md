@@ -30,6 +30,7 @@ aus_temperature:
   
 isr_temperature:
 | variable | type | description |
+| -------- | ---- | ---------- |
 | station_name | character | Actual site / weather station |
 | station_number | double | Station number |
 | date | date | Date |
@@ -43,6 +44,7 @@ isr_temperature:
   
 aus_rainfall:
 | variable | type | description |
+| -------- | ---- | ---------- |
 | date | date - Date |
 | city_name | character | City Name |
 | station_name | character | Station Name |
@@ -56,6 +58,7 @@ aus_rainfall:
 
 isr_rainfall:
 | variable | type | description |
+| -------- | ---- | ---------- |
 | station_name | character | Station Name |
 | station_number | character | Station Code |
 | date | date | Date |
@@ -65,6 +68,7 @@ isr_rainfall:
 
 aus_fires:
 | variable | type | description |
+| -------- | ---- | ---------- |
 | latitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
 | longitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
 | brightness | double | Channel 21/22 brightness temperature of the fire pixel measured in Kelvin. |
@@ -82,6 +86,7 @@ aus_fires:
 
 isr_fires:
 | variable | type | description |
+| -------- | ---- | ---------- |
 | latitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
 | longitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
 | brightness | double | Channel 21/22 brightness temperature of the fire pixel measured in Kelvin. |
