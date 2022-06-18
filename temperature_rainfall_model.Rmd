@@ -1,0 +1,231 @@
+---
+title: "Predicting Fires by Temperature and Rainfall"
+author: "Shir Goldfarb, Ofek Glik & Alon Samocha"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Import Libraries, Data and Set Global Options
+
+#### 1.1. Import relevant libraries
+```{r import_libraries, message=F, warning=F}
+library(tidyverse)
+library(tidymodels)
+library(ggthemes)
+library(knitr)
+```
+
+#### 1.2. Set global options and notebook's theme
+```{r global_options}
+options(event_level = "second")
+my_theme <- theme_fivethirtyeight() + 
+  theme(axis.title= element_text(face="bold", size=12),
+        legend.text= element_text(),
+        legend.title= element_text(),
+        legend.direction = "vertical",
+        legend.position="right")
+theme_set(my_theme)
+columns_to_show <- c("acq_date", "daynight", "brightness", "frp", "confidence_level", "rainfall_7d_sum", "temperature", "longitude", "latitude")
+```
+
+#### 1.3. Import and transform data
+```{r import_data}
+aus_fires <- read.csv("./data/temperature-rainfall-model/filtered_aus_fires.csv")
+isr_fires <- read.csv("./data/temperature-rainfall-model/isr_fires_w_confidence.csv")
+
+aus_fires <- aus_fires %>% mutate(confidence_level = as.factor(confidence_level)) %>% transform(acq_date = as.Date(acq_date)) %>% arrange(acq_date, acq_time)
+isr_fires <- isr_fires %>% mutate(confidence_level = as.factor(confidence_level)) %>% transform(acq_date = as.Date(acq_date)) %>% arrange(acq_date, acq_time)
+```
+
+## 2. Predict Fire's Confidence Level by Temperature, Rainfall Amount and Distances to Nearest Stations
+Build the model by using 75% of Australia Fires data, validate it by using the other 25%.
+
+
+#### 2.1. Split Data into Train and Test
+```{r train_test, warning=F, message=F}
+aus_fires_split <- initial_split(aus_fires)
+train_aus_fire <- training(aus_fires_split)
+test_aus_fire <- testing(aus_fires_split)
+
+# Preview the train data
+kable(head(train_aus_fire %>% select(columns_to_show)), align="c")
+```
+
+
+#### 2.2. Run Logistic Regression on the Train data and Fit The Model
+```{r reg_fit, warning=F}
+model <- logistic_reg() %>% 
+  set_engine("glm") %>%
+  set_mode("classification")
+
+rec <- recipe(
+  confidence_level ~ temperature + rainfall_7d_sum + distance_from_rain_station + distance_from_temp_station, data=train_aus_fire 
+  )
+
+conf_wf <- workflow() %>% 
+  add_model(model) %>%
+  add_recipe(rec)
+
+conf_fit <- conf_wf %>% fit(data = train_aus_fire)
+```
+
+#### 2.3. Preview the test data
+```{r preview_test, warning=F, message=F}
+kable(head(test_aus_fire %>% select(columns_to_show)), align="c")
+```
+
+#### 2.4. Predict the confidence level of each record in the Test data
+```{r predict_test_aus}
+aus_pred_df <- predict(conf_fit, test_aus_fire, type = "prob") %>% 
+  bind_cols(test_aus_fire)
+```
+
+#### 2.5. Plot ROC Curve and calculate the Area Under the Curve
+```{r roc_curve_aus}
+# Convert the predicted value into a factor, divided by the original data (Mean - Standard Deviation)
+aus_pred_df <- aus_pred_df %>%
+  mutate(pred_1 = cut(.pred_1, 
+                   breaks=c('-inf', 0.48, 'inf'), 
+                   labels=c(0,1)))
+
+# Calculate the Area Under the Curve
+auc <- aus_pred_df %>%
+  roc_auc(
+    truth = confidence_level,
+    .pred_1,
+    event_level = "second") %>%
+    select(.estimate) %>% pull()
+
+# Plot ROC Curve
+aus_pred_df %>%
+  roc_curve(
+    truth = confidence_level,
+    .pred_1,
+    event_level = "second") %>%
+  ggplot(aes(x = 1 - specificity, y = sensitivity)) +
+  geom_line(size=1) +
+  geom_ribbon(ymin=0, aes(ymax=sensitivity), fill='grey20', alpha=0.2) +
+  geom_abline(lty =2) +
+  annotate(geom="text", x=0.7, y=0.5, col="black", 
+           label= paste("AUC: ", round(auc, digits=3))) +
+  coord_equal() +
+  labs(
+    title = "ROC Curve",
+    subtitle= "Confidence Level by Temperature and Rainfall amount",
+    x = "FP Rate",
+    y = "TP Rate")
+```
+
+#### 2.6. Plot Confusion Matrix
+```{r aus_conf_mat, warning=F, message=F}
+aus_pred_df %>% group_by(confidence_level,pred_1) %>%
+  summarise(Freq = n()) %>% as.data.frame() %>% 
+  ggplot(aes(x=confidence_level, y=pred_1, fill=Freq)) + geom_tile() + 
+  geom_text(aes(label = Freq), size = 6) +
+  scale_fill_gradient(low = "white", high = "#3575b5") + 
+  labs(
+    title = "Confidence Level by Temperature and Rainfall Amount",
+    subtitle = "Model trained on AUS data and tested on AUS data",
+    x = "Actual",
+    y = "Predicted") +
+  scale_x_discrete(limits = rev, labels = c("True", "False")) +
+  scale_y_discrete(labels=c("False", "True")) +
+  geom_tile(color = "black", fill = "black", alpha = 0) +
+  theme(axis.text = element_text(color = "black", size=12),
+        axis.title = element_text(color="black", size=14))
+```
+
+#### 2.7. Analyze Confusion Matrix's metrics
+```{r aus_metrics, warning=F, message=F}
+confidence_mat <- conf_mat(
+   data = aus_pred_df,
+  truth = confidence_level,
+  estimate = pred_1,
+)
+kable(summary(confidence_mat) %>% select(-.estimator) %>% filter(.metric %in% c("accuracy", "recall", "precision", "f_meas")), align="c")
+```
+
+
+## 3. Test the model on Israel's Fire data (Non-NA Confidence values)
+
+#### 3.1. Preview the test data
+```{r preview_isr, warning=F, message=F}
+kable(head(isr_fires %>% select(columns_to_show)), align="c")
+```
+
+#### 3.2. Predict the confidence level of each record in the Test data
+```{r predict_isr}
+isr_pred_df <- predict(conf_fit, isr_fires, type = "prob") %>% 
+  bind_cols(isr_fires)
+```
+
+### 3.3. Plot ROC Curve and calculate the Area Under the Curve
+```{r roc_curve_isr}
+# Convert the predicted value into a factor, divided by the original data (Mean - Standard Deviation)
+isr_pred_df <- isr_pred_df %>%
+  mutate(pred_1 = cut(.pred_1, 
+                   breaks=c('-inf', 0.48, 'inf'), 
+                   labels=c(0,1)))
+
+# Calculate the Area Under the Curve
+auc <- isr_pred_df %>%
+  roc_auc(
+    truth = confidence_level,
+    .pred_1
+  ) %>% select(.estimate) %>% pull()
+
+# Plot ROC Curve
+isr_pred_df %>%
+  roc_curve(
+    truth = confidence_level,
+    .pred_1,
+    event_level = "second") %>%
+  ggplot(aes(x = 1 - specificity, y = sensitivity)) +
+  geom_line(size=1) +
+  geom_ribbon(ymin=0, aes(ymax=sensitivity), fill='grey20', alpha=0.2) +
+  geom_abline(lty =2) +
+  annotate(geom="text", x=0.7, y=0.5, col="black", 
+           label= paste("AUC: ", round(auc, digits=3))) +
+  coord_equal() +
+  labs(
+    title = "ROC Curve",
+    subtitle= "Confidence Level by Brightness and FRP",
+    x = "FP Rate",
+    y = "TP Rate")
+```
+
+#### 3.4. Plot Confusion Matrix
+```{r isr_conf_mat, warning=F, message=F}
+isr_pred_df %>% group_by(confidence_level,pred_1) %>%
+  summarise(Freq = n()) %>% as.data.frame() %>% 
+  ggplot(aes(x=confidence_level, y=pred_1, fill=Freq)) + geom_tile() + 
+  geom_text(aes(label = Freq), size = 6) +
+  scale_fill_gradient(low = "white", high = "#3575b5") + 
+  labs(
+    title = "Confidence Level by Temperature and Rainfall Amount",
+    subtitle = "Model trained on AUS data and tested on ISR data",
+    x = "Actual",
+    y = "Predicted") +
+  scale_x_discrete(limits = rev, labels = c("True", "False")) +
+  scale_y_discrete(labels=c("False", "True")) +
+  geom_tile(color = "black", fill = "black", alpha = 0) +
+  theme(axis.text = element_text(color = "black", size=12))
+```
+
+
+#### 3.5. Analyze Confusion Matrix's metrics
+```{r isr_metrics, warning=F, message=F}
+confidence_mat <- conf_mat(
+   data = isr_pred_df,
+  truth = confidence_level,
+  estimate = pred_1,
+)
+kable(summary(confidence_mat) %>% select(-.estimator) %>% filter(.metric %in% c("accuracy", "recall", "precision", "f_meas")), align="c")
+```
