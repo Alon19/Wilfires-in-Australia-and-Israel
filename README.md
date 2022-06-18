@@ -11,6 +11,8 @@ The tables contain more than 3,000,000 observations of fires in Australia and 19
 After inspecting every attribute of the data, relating to our research question, we have concluded that the attributes that are of most relevance to us are: brightness, frp (fire radiative power) and confidence in the NASA fires tables, the amount of rain in the rain tables, and the maximum temperature in the temperature’s tables.
 Each sample of every table also contains a coordinate, indicating the location the sample was observed. This was used to join the data from the weather stations to the fire observations.
 
+Feel free to download the data: https://bit.ly/3bck9RN
+
 
 ### Data Dictionary
 
