@@ -12,7 +12,7 @@ After inspecting every attribute of the data, relating to our research question,
 Each sample of every table also contains a coordinate, indicating the location the sample was observed. This was used to join the data from the weather stations to the fire observations.
 
 
-### Data_Dictionary
+### Data Dictionary
 
 aus_temperature:
 | variable | type | description |
@@ -101,7 +101,6 @@ isr_fires:
 | day_night | character | D = Daytime, N = Nighttime |
 | instrument | character | satellite name |
 
-#####################################################################################
 
 ## Analysis
 
@@ -118,9 +117,6 @@ isr_fires:
 - - Calculate the distance of each fire in Israel to the nearest rain and temperature station.
 - Add Temperature and Rainfall (7-day rolling sum) columns to each fire, measured by the closest weather station.
 4. Export the Transformed Data to .csv Files.
-
-
-#####################################################################################
 
 ### Step 2 - Predicting Confidence Level by Brightness and Fire Radiative Power
 
