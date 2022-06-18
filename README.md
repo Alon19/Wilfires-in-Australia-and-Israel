@@ -45,12 +45,12 @@ isr_temperature:
 aus_rainfall:
 | variable | type | description |
 | -------- | ---- | ---------- |
-| date | date - Date |
+| date | date | Date |
 | city_name | character | City Name |
 | station_name | character | Station Name |
 | station_number | character | Station Code |
-| amount - double | rainfall in millimeters |
-| period - double | how many days was is collected across |
+| amount | double | rainfall in millimeters |
+| period | double | how many days was is collected across |
 | quality | character | Certified quality or not |
 | lat | double | latitude |
 | long | double | longitude |
