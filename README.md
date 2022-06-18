@@ -150,3 +150,6 @@ We used the dataset from Australia and built a logistic-regression model, using 
 3. Test the model on Israel’s Fire data (Non-NA Confidence values).
 - Predict the confidence level of each record in the Test data.
 - Analyze Confusion Matrix’s metrics and ROC Curve of the model.
+
+
+Have fun and enjoy analyzing!
