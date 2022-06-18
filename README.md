@@ -14,7 +14,7 @@ Each sample of every table also contains a coordinate, indicating the location t
 
 ### Data Dictionary
 
-aus_temperature:
+#### aus_temperature:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | date | date | Date |
@@ -28,7 +28,7 @@ aus_temperature:
 | latitude | double | Latitude |
 | longitude | double | Longitude |
   
-isr_temperature:
+#### isr_temperature:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | station_name | character | Actual site / weather station |
@@ -42,7 +42,7 @@ isr_temperature:
 | longitude | double | Longitude |
 
   
-aus_rainfall:
+#### aus_rainfall:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | date | date | Date |
@@ -56,7 +56,7 @@ aus_rainfall:
 | long | double | longitude |
   
 
-isr_rainfall:
+#### isr_rainfall:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | station_name | character | Station Name |
@@ -66,7 +66,7 @@ isr_rainfall:
 | daily_rain_code | double | Daily Rain Code |
 
 
-aus_fires:
+#### aus_fires:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | latitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
@@ -84,7 +84,7 @@ aus_fires:
 
 
 
-isr_fires:
+#### isr_fires:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | latitude | double | Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel. |
