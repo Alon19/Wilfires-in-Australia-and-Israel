@@ -15,10 +15,10 @@ Each sample of every table also contains a coordinate, indicating the location t
 ### Data_Dictionary
 
 aus_temperature:
-  variable - type - description
-
-    date - date : Date
-    city_name - character : City Name
+  variable | type | description
+  -------- | ---- | ----------
+    date | date | Date
+    city_name | character | City Name
     station_name - character : Actual site / weather station
     station_number - double : Station number
     temperature - double : Temperature in Celsius
