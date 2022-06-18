@@ -72,19 +72,12 @@ aus_fires:
   variable - type : description
 
     latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
-
     longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
-
     brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
-
     scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
-
     track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
-
     acq_date - date : Date of MODIS acquisition.
-
-    act_time - character : Time of acquisition/overpass of the satellite (in UTC).
-
+    acq_time - character : Time of acquisition/overpass of the satellite (in UTC).
     satellite - character : A = Aqua and T = Terra. 
 
     confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
@@ -101,29 +94,17 @@ isr_fires:
   variable - type : description
 
     latitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
-
     longitude - double : Center of 1km fire pixel but not necessarily the actual location of the fire as one or more fires can be detected within the 1km pixel.
-
     brightness - double : Channel 21/22 brightness temperature of the fire pixel measured in Kelvin.
-
     scan - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
-
     track - double : The algorithm produces 1km fire pixels but MODIS pixels get bigger toward the edge of scan. Scan and track reflect actual pixel size.
-
     acq_date - date : Date of MODIS acquisition.
-
-    act_time - character : Time of acquisition/overpass of the satellite (in UTC).
-
+    acq_time - character : Time of acquisition/overpass of the satellite (in UTC).
     satellite - character : A = Aqua and T = Terra. 
-
     confidence - double : This value is based on a collection of intermediate algorithm quantities used in the detection process. It is intended to help users gauge the quality of individual hotspot/fire pixels. Confidence estimates range between 0 and 100% and are assigned one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire).
-
     bright_t31 - double : Channel 31 brightness temperature of the fire pixel measured in Kelvin.
-
     frp - double : Depicts the pixel-integrated fire radiative power in MW (megawatts).
-
     day_night - character : D = Daytime, N = Nighttime
-
     instrument - character : satellite name
 
 #####################################################################################
@@ -137,12 +118,12 @@ isr_fires:
 2. Exploratory Data Analysis
 - Examine each of the datasets
 - Visualizations - Explore relationships between the different fields.
-4. Join spatial data.
+3. Join spatial data.
 - Create function that returns a distance matrix between each fire location and  each weather station.
 - Calculate the distance of each fire in Australia to the nearest rain and temperature station.
 - - Calculate the distance of each fire in Israel to the nearest rain and temperature station.
 - Add Temperature and Rainfall (7-day rolling sum) columns to each fire, measured by the closest weather station.
-5.Export the Transformed Data to .csv Files.
+4. Export the Transformed Data to .csv Files.
 
 
 #####################################################################################
@@ -157,12 +138,12 @@ We wanted to use the confidence attribute as a Boolean indication, whether there
 - Run Logistic Regression on the Train data and Fit The Model.
 - Predict the confidence level of each record in the Test data.
 - Analyze Confusion Matrix’s metrics and ROC Curve of the model.
-3.Test the model on Israel’s Fire data (Non-NA Confidence values).
+3. Test the model on Israel’s Fire data (Non-NA Confidence values).
 - Filter for Non-NA values and preview the data.
 - Predict the confidence level for each record in the data.
 - Analyze Confusion Matrix’s metrics and ROC Curve of the model.
-4.Fill Missing Values using Validated Model.
-5.Export new data.
+4. Fill Missing Values using Validated Model.
+5. Export new data.
 
 
 ### Step 3 - Predicting Fires by Temperature and Rainfall
