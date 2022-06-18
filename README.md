@@ -18,17 +18,15 @@ aus_temperature:
 | variable | type | description |
 | -------- | ---- | ---------- |
 | date | date | Date |
-
-
-    city_name | character | City Name
-    station_name - character : Actual site / weather station
-    station_number - double : Station number
-    temperature - double : Temperature in Celsius
-    accumulation_days - double : Accumulation days
-    quality - character : Certified quality or not
-    min.max - character : min or max temperature
-    latitude - double : Latitude
-    longitude - double : Longitude
+| city_name | character | City Name |
+| station_name | character | Actual site / weather station |
+| station_number | double | Station number |
+| temperature | double | Temperature in Celsius |
+| accumulation_days | double | Accumulation days |
+| quality | character | Certified quality or not |
+| min.max | character | min or max temperature |
+| latitude | double | Latitude |
+| longitude | double | Longitude |
   
 isr_temperature:
   variable - type - description
